@@ -15,7 +15,7 @@ class MainActivity : Activity() {
     private lateinit var mList: MutableList<String>
     private lateinit var mAdapter: MyAdapter
 
-    var blank: Int = 0
+    private var blank: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
