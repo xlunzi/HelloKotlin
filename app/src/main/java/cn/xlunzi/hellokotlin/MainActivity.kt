@@ -36,14 +36,12 @@ class MainActivity : Activity() {
         blank = mList.size - 1
 
         gv_content.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            println("xlunzi --> $position-" + mList[position])
-            go(position)
-            println("xlunzi --> $position-" + mList[position])
+            move(position)
         }
     }
 
-    private fun go(position: Int) {
-        if (position == blank) {
+    private fun move(position: Int) {
+        if (!canMove(position)) {
             return
         }
 
@@ -54,5 +52,34 @@ class MainActivity : Activity() {
         mAdapter.notifyDataSetChanged()
 
         blank = position
+    }
+
+    private fun canMove(position: Int) = when (blank) {
+        position -> false
+        0, 3, 6, 9 -> {
+            when (position) {
+                blank + 1 -> true
+                blank + 3 -> true
+                blank - 3 -> true
+                else -> false
+            }
+        }
+        2, 5, 8, 11 -> {
+            when (position) {
+                blank - 1 -> true
+                blank + 3 -> true
+                blank - 3 -> true
+                else -> false
+            }
+        }
+        else -> {
+            when (position) {
+                blank + 1 -> true
+                blank - 1 -> true
+                blank + 3 -> true
+                blank - 3 -> true
+                else -> false
+            }
+        }
     }
 }
