@@ -23,19 +23,19 @@ class MainActivity : Activity() {
 
         random = Random()
 
-        tv_hello.text = "你好，世界!"
-        tv_hello.setOnClickListener {
-            // all.background = ColorDrawable(Color.parseColor(ColorUtil.getColor()))
-            tv_hello.text = "拼图"
-            doRandom()
-            mAdapter.notifyDataSetChanged()
-        }
-
         mList = mutableListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B")
         mAdapter = MyAdapter(this, mList)
         gv_content.adapter = mAdapter
 
         blank = mList.size - 1
+
+        tv_hello.text = "点我开始游戏!"
+        tv_hello.setOnClickListener {
+            // all.background = ColorDrawable(Color.parseColor(ColorUtil.getColor()))
+            tv_hello.text = "开始拼图"
+            doRandom()
+            mAdapter.notifyDataSetChanged()
+        }
 
         gv_content.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             move(position)
@@ -46,9 +46,18 @@ class MainActivity : Activity() {
         var one: Int
         var two: Int
         var temp: String
-        for (i in 0..11) {
-            one = random.nextInt(12)
-            two = random.nextInt(12)
+        for (i in 0 until mList.size) {
+            one = random.nextInt(mList.size)
+            two = random.nextInt(mList.size)
+
+            if (one == two) {
+                continue
+            }
+            if (one == blank) {
+                blank = two
+            } else if (two == blank) {
+                blank = one
+            }
 
             temp = mList[one]
             mList[one] = mList[two]
