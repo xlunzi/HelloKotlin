@@ -25,8 +25,10 @@ class MainActivity : Activity() {
 
         tv_hello.text = "你好，世界!"
         tv_hello.setOnClickListener {
-            all.background = ColorDrawable(Color.parseColor(ColorUtil.getColor()))
+            // all.background = ColorDrawable(Color.parseColor(ColorUtil.getColor()))
             tv_hello.text = "拼图"
+            doRandom()
+            mAdapter.notifyDataSetChanged()
         }
 
         mList = mutableListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B")
@@ -37,6 +39,20 @@ class MainActivity : Activity() {
 
         gv_content.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             move(position)
+        }
+    }
+
+    private fun doRandom() {
+        var one: Int
+        var two: Int
+        var temp: String
+        for (i in 0..11) {
+            one = random.nextInt(12)
+            two = random.nextInt(12)
+
+            temp = mList[one]
+            mList[one] = mList[two]
+            mList[two] = temp
         }
     }
 
