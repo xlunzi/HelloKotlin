@@ -15,6 +15,8 @@ class MainActivity : Activity() {
     private lateinit var mList: MutableList<String>
     private lateinit var mAdapter: MyAdapter
 
+    var blank: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,9 +33,26 @@ class MainActivity : Activity() {
         mAdapter = MyAdapter(this, mList)
         gv_content.adapter = mAdapter
 
+        blank = mList.size - 1
+
         gv_content.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            println("xlunzi --> $position")
+            println("xlunzi --> $position-" + mList[position])
+            go(position)
+            println("xlunzi --> $position-" + mList[position])
         }
     }
 
+    private fun go(position: Int) {
+        if (position == blank) {
+            return
+        }
+
+        val temp = mList[position]
+        mList[position] = mList[blank]
+        mList[blank] = temp
+
+        mAdapter.notifyDataSetChanged()
+
+        blank = position
+    }
 }

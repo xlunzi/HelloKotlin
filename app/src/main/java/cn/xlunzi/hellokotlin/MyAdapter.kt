@@ -18,26 +18,29 @@ class MyAdapter constructor(mContext: Context, list: List<String>) : BaseAdapter
 
     private var mContext = mContext
     private var list = list
-    private lateinit var tvNum: TextView
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view: View
+        var holder: ViewHolder
         if (convertView == null) {
             view = View.inflate(mContext, R.layout.item_num, null)
-            tvNum = view.tv_num_item
+            holder = ViewHolder()
+            holder.tvNum = view.tv_num_item
+            view.tag = holder
         } else {
             view = convertView
+            holder = view.tag as ViewHolder
         }
 
         var num = list[position]
         when (num) {
             "B" -> {
-                tvNum.text = ""
-                tvNum.background = ColorDrawable(Color.parseColor("#FFFFFFFF"))
+                holder.tvNum.text = ""
+                holder.tvNum.background = ColorDrawable(Color.parseColor("#FFFFFFFF"))
             }
             else -> {
-                tvNum.text = num
-                tvNum.background = ColorDrawable(Color.parseColor("#FF26A69A"))
+                holder.tvNum.text = num
+                holder.tvNum.background = ColorDrawable(Color.parseColor("#FF26A69A"))
             }
         }
 
@@ -56,4 +59,7 @@ class MyAdapter constructor(mContext: Context, list: List<String>) : BaseAdapter
         return list.size
     }
 
+    class ViewHolder {
+        lateinit var tvNum: TextView
+    }
 }
